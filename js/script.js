@@ -7,9 +7,6 @@ $(document).ready(function() {
     googleApiUrl += "key=AIzaSyCLXwXnb5FasH9MVlYx0rRSzSqNkvRMRQI";
     googleApiUrl += "&address=" + userAddress;
 
-
-    alert("hello");
-
     $.ajax({
     	type: "GET",
     	url: googleApiUrl,
@@ -18,9 +15,25 @@ $(document).ready(function() {
 
   });
 
+  function getCoordinates(){
+    var geoLocation = response.results[0].geometry.location;
+    var flickrApiUrl = "https://api.flickr.com/services/rest/?";
+    var flickrApiParams = {
+      api_key: "5d0b99b598780adb1ce7f682110a03e6",
+      method: "flickr.photos.search",
+      format: "json",
+      nojsoncallback: 1,
+      lat: geoLocation.lat,
+      lon: geoLocation.lng
+    }
+    
+    $.ajax({
+      type: "GET",
+      url: flickrApiUrl + $.param(flickrApiParams),
+      success: flickrSuccessHandler
+    });
+  }
+
 });
 
 
-function getCoordinates(){
-	
-}
